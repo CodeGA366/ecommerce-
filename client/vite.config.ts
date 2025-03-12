@@ -8,7 +8,7 @@ export default defineConfig({
     open: true,
   },
   build: {
-    outDir: 'dist',
+    outDir: '../dist', // Adjust the output directory
   },
   resolve: {
     alias: {
