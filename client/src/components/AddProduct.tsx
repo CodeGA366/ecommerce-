@@ -17,6 +17,7 @@ const AddProduct: React.FC<{ onProductAdded: () => void }> = ({ onProductAdded }
         name: productName,
         description: productDescription,
         price: productPrice,
+        image: productImage,
       });
       onProductAdded();
     } catch (err) {

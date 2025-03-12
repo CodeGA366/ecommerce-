@@ -42,6 +42,9 @@ const Home: React.FC<HomeProps> = ({ user }) => {
         {products.length > 0 ? (
           products.map((product) => (
             <div key={product.id} className="p-4 bg-white rounded-lg shadow-md">
+              {product.imageUrl && (
+                <img src={`http://localhost:5000${product.imageUrl}`} alt={product.name} className="w-full h-48 object-cover mb-4 rounded-md" />
+              )}
               <h3 className="text-xl font-semibold">{product.name}</h3>
               <p className="text-gray-700">{product.description}</p>
               <p className="text-gray-900 font-bold">${product.price}</p>

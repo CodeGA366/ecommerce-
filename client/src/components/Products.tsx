@@ -36,6 +36,9 @@ const Products: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {products.map((product) => (
           <div key={product.id} className="p-4 bg-white rounded-lg shadow-md">
+            {product.imageUrl && (
+              <img src={`http://localhost:5000${product.imageUrl}`} alt={product.name} className="w-full h-48 object-cover mb-4 rounded-md" />
+            )}
             <h2 className="text-xl font-semibold">{product.name}</h2>
             <p className="text-gray-700">{product.description}</p>
             <p className="text-gray-900 font-bold">${product.price}</p>
