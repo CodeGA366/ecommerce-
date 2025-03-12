@@ -4,7 +4,6 @@ import Signup from '../components/Signup';
 const SignupPage: React.FC = () => {
   return (
     <div>
-      <h1>Sign Up</h1>
       <Signup />
     </div>
   );

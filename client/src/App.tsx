@@ -15,7 +15,7 @@ const App: React.FC = () => {
   return (
     <AuthProvider>
       <Router>
-        <Navbar onLogout={() => {}} />
+        <Navbar />
         <Routes>
           <Route path="/" element={<Navigate to="/login" />} />
           <Route path="/login" element={<LoginPage />} />

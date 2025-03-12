@@ -10,7 +10,6 @@ const AddProductPage: React.FC = () => {
 
     return (
         <div>
-            <h1>Add a New Product</h1>
             <AddProduct onProductAdded={handleProductAdded} />
             {productAdded && <p>Product added successfully!</p>}
         </div>
