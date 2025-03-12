@@ -8,14 +8,16 @@ interface AuthenticatedRequest extends Request {
     name: string;
     email: string;
   };
+  file?: Express.Multer.File;
 }
 
 export const createProduct = async (req: AuthenticatedRequest, res: Response): Promise<Response | void> => {
   const { name, description, price } = req.body;
   const userId = req.user?.id; // Use optional chaining to access user information
+  const imageUrl = req.file ? `/uploads/${req.file.filename}` : null; // Get the image URL
 
   console.log('User ID:', userId);
-  console.log('Product details:', { name, description, price });
+  console.log('Product details:', { name, description, price, imageUrl });
 
   if (!userId) {
     console.error('Unauthorized: No user ID found');
@@ -28,6 +30,7 @@ export const createProduct = async (req: AuthenticatedRequest, res: Response): P
       description,
       price,
       userId,
+      imageUrl: imageUrl || '',
     });
 
     console.log('Product created:', product);

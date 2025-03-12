@@ -11,6 +11,7 @@ export interface Product {
   name: string;
   description: string;
   price: number;
+  imageUrl?: string; // Add imageUrl property
 }
 
 export interface Sale {
@@ -20,8 +21,8 @@ export interface Sale {
 }
 
 export interface AuthContextType {
-    user: User | null;
-    login: (email: string, password: string) => Promise<void>;
-    signup: (username: string, email: string, password: string) => Promise<void>;
-    logout: () => void;
+  user: User | null;
+  login: (email: string, password: string) => Promise<void>;
+  signup: (username: string, email: string, password: string) => Promise<void>;
+  logout: () => void;
 }
