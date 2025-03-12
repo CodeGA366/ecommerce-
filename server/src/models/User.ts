@@ -1,5 +1,6 @@
 import { DataTypes, Model, Optional } from 'sequelize';
 import sequelize from '../config/database';
+import Product from './Product';
 
 interface UserAttributes {
   id: number;
@@ -10,9 +11,14 @@ interface UserAttributes {
 
 interface UserCreationAttributes extends Optional<UserAttributes, 'id'> {}
 
-class User extends Model<UserAttributes, UserCreationAttributes> {
-  // No need to declare public class fields here
-  // Sequelize will handle the attributes
+class User extends Model<UserAttributes, UserCreationAttributes> implements UserAttributes {
+  declare id: number;
+  declare name: string;
+  declare email: string;
+  declare password: string;
+
+  public readonly createdAt!: Date;
+  public readonly updatedAt!: Date;
 }
 
 User.init(
@@ -41,5 +47,9 @@ User.init(
     modelName: 'User',
   }
 );
+
+// Define associations
+User.hasMany(Product, { foreignKey: 'userId', as: 'products' });
+Product.belongsTo(User, { foreignKey: 'userId', as: 'user' });
 
 export default User;

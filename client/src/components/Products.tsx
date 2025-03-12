@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { fetchProducts } from '../services/api';
+import { Product } from '../types';
 
 const Products: React.FC = () => {
-  const [products, setProducts] = useState<any[]>([]);
+  const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 

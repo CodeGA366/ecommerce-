@@ -17,16 +17,19 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const login = async (email: string, password: string) => {
     const userData = await loginUser(email, password);
     setUser(userData);
+    localStorage.setItem('token', userData.token); // Store the token in localStorage
   };
 
   const signup = async (username: string, email: string, password: string) => {
     const userData = await signupUser(username, email, password);
     setUser(userData);
+    localStorage.setItem('token', userData.token); // Store the token in localStorage
   };
 
   const logout = async () => {
     await logoutUser();
     setUser(null);
+    localStorage.removeItem('token'); // Remove the token from localStorage
   };
 
   return (

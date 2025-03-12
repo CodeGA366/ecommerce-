@@ -1,27 +1,34 @@
 import React, { useState } from 'react';
+import { addProduct } from '../services/api';
 
 const AddProduct: React.FC<{ onProductAdded: () => void }> = ({ onProductAdded }) => {
   const [productName, setProductName] = useState('');
   const [productDescription, setProductDescription] = useState('');
   const [productPrice, setProductPrice] = useState(0);
   const [productImage, setProductImage] = useState<File | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Logic to handle product submission goes here
-    console.log({
-      productName,
-      productDescription,
-      productPrice,
-      productImage,
-    });
-    onProductAdded();
+    setError(null);
+
+    try {
+      await addProduct({
+        name: productName,
+        description: productDescription,
+        price: productPrice,
+      });
+      onProductAdded();
+    } catch (err) {
+      setError('Failed to add product');
+    }
   };
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md">
         <h2 className="text-2xl font-bold text-center">Add a New Product</h2>
+        {error && <p className="text-sm text-red-600">{error}</p>}
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-700">Product Name</label>
