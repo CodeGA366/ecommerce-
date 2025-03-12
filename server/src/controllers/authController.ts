@@ -69,3 +69,13 @@ export const login = async (req: Request, res: Response): Promise<Response | voi
     return res.status(500).json({ message: 'Internal server error' });
   }
 };
+
+export const logout = async (req: Request, res: Response): Promise<Response | void> => {
+  try {
+    // Perform any necessary cleanup or token invalidation here
+    return res.status(200).json({ message: 'Logged out successfully' });
+  } catch (error) {
+    console.error('Logout error:', error);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+};
