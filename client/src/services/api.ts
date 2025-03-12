@@ -25,7 +25,23 @@ export const fetchProducts = async () => {
 };
 
 export const addProduct = async (product: { name: string; price: number; description: string }) => {
-  const response = await axios.post(`${API_URL}/products`, product);
+  const token = localStorage.getItem('token'); // Assuming the token is stored in localStorage
+  console.log('Token sent:', token);
+  const response = await axios.post(`${API_URL}/products`, product, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response.data;
+};
+
+export const fetchUserProducts = async () => {
+  const token = localStorage.getItem('token'); // Assuming the token is stored in localStorage
+  const response = await axios.get(`${API_URL}/user/products`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
   return response.data;
 };
 
