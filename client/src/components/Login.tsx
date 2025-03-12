@@ -1,6 +1,7 @@
 //imports 
 import React, { useState, useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const Login: React.FC = () => {
     const authContext = useContext(AuthContext);
@@ -8,12 +9,14 @@ const Login: React.FC = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
+    const navigate = useNavigate();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
             if (login) {
                 await login(email, password);
+                navigate('/home');
             } else {
                 setError('Login function is not available');
             }
