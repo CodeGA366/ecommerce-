@@ -12,6 +12,8 @@ export interface Product {
   description: string;
   price: number;
   imageUrl?: string; // Add imageUrl property
+  sold: boolean; // Add sold property
+  userId: string;
 }
 
 export interface Sale {

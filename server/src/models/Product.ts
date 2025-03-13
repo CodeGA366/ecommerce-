@@ -8,18 +8,12 @@ interface ProductAttributes {
   price: number;
   userId: number;
   imageUrl: string; // Add imageUrl field
+  sold: boolean; // Add sold field
 }
 
 interface ProductCreationAttributes extends Optional<ProductAttributes, 'id'> {}
 
-class Product extends Model<ProductAttributes, ProductCreationAttributes> implements ProductAttributes {
-  public id!: number;
-  public name!: string;
-  public description!: string;
-  public price!: number;
-  public userId!: number;
-  public imageUrl!: string; // Add imageUrl field
-
+class Product extends Model<ProductAttributes, ProductCreationAttributes> {
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
 }
@@ -50,6 +44,11 @@ Product.init(
     imageUrl: {
       type: DataTypes.STRING,
       allowNull: true, // Allow null for backward compatibility
+    },
+    sold: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false, // Set default value to false
     },
   },
   {

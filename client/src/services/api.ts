@@ -52,6 +52,16 @@ export const fetchUserProducts = async () => {
       Authorization: `Bearer ${token}`,
     },
   });
+  return response.data; // Return the entire response data
+};
+
+export const buyProduct = async (productId: string) => {
+  const token = localStorage.getItem('token'); // Assuming the token is stored in localStorage
+  const response = await axios.post(`${API_URL}/products/${productId}/buy`, {}, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
   return response.data;
 };
 
