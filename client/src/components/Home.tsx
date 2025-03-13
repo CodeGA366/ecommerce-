@@ -7,7 +7,8 @@ interface HomeProps {
 }
 
 const Home: React.FC<HomeProps> = ({ user }) => {
-  const [products, setProducts] = useState<Product[]>([]);
+  const [boughtProducts, setBoughtProducts] = useState<Product[]>([]);
+  const [soldProducts, setSoldProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -15,7 +16,8 @@ const Home: React.FC<HomeProps> = ({ user }) => {
     const getUserProducts = async () => {
       try {
         const data = await fetchUserProducts();
-        setProducts(data);
+        setBoughtProducts(data.boughtProducts || []); // Ensure boughtProducts is an array
+        setSoldProducts(data.soldProducts || []); // Ensure soldProducts is an array
       } catch (err) {
         setError('Failed to fetch products');
       } finally {
@@ -39,8 +41,8 @@ const Home: React.FC<HomeProps> = ({ user }) => {
       <h1 className="text-3xl font-bold mb-4">Welcome, {user.name}!</h1>
       <h2 className="text-2xl font-semibold mb-2">Your Products</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {products.length > 0 ? (
-          products.map((product) => (
+        {boughtProducts.length > 0 ? (
+          boughtProducts.map((product) => (
             <div key={product.id} className="p-4 bg-white rounded-lg shadow-md">
               {product.imageUrl && (
                 <img src={`http://localhost:5000${product.imageUrl}`} alt={product.name} className="w-full h-48 object-cover mb-4 rounded-md" />
@@ -56,11 +58,15 @@ const Home: React.FC<HomeProps> = ({ user }) => {
       </div>
       <h2 className="text-2xl font-semibold mt-8 mb-2">Your Sales</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {user.sales.length > 0 ? (
-          user.sales.map((sale) => (
-            <div key={sale.id} className="p-4 bg-white rounded-lg shadow-md">
-              <h3 className="text-xl font-semibold">Product ID: {sale.productId}</h3>
-              <p className="text-gray-900 font-bold">Sold for: ${sale.amount}</p>
+        {soldProducts.length > 0 ? (
+          soldProducts.map((product) => (
+            <div key={product.id} className="p-4 bg-white rounded-lg shadow-md">
+              {product.imageUrl && (
+                <img src={`http://localhost:5000${product.imageUrl}`} alt={product.name} className="w-full h-48 object-cover mb-4 rounded-md" />
+              )}
+              <h3 className="text-xl font-semibold">{product.name}</h3>
+              <p className="text-gray-700">{product.description}</p>
+              <p className="text-gray-900 font-bold">${product.price}</p>
             </div>
           ))
         ) : (

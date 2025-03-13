@@ -1,6 +1,5 @@
 import { DataTypes, Model, Optional } from 'sequelize';
 import sequelize from '../config/database';
-import Product from './Product';
 
 interface UserAttributes {
   id: number;
@@ -47,9 +46,5 @@ User.init(
     modelName: 'User',
   }
 );
-
-// Define associations
-User.hasMany(Product, { foreignKey: 'userId', as: 'products' });
-Product.belongsTo(User, { foreignKey: 'userId', as: 'user' });
 
 export default User;

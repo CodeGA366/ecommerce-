@@ -1,7 +1,7 @@
 import { Router, Request, Response } from 'express';
 import { AuthenticatedRequest } from '../types';
 import { signup, login, logout } from '../controllers/authController';
-import { createProduct, getAllProducts, getUserProducts } from '../controllers/productController';
+import { createProduct, getAllProducts, getUserProducts, buyProduct } from '../controllers/productController';
 import { protect } from '../middleware/authMiddleware';
 import upload from '../middleware/uploadMiddleware'; // Import the upload middleware
 
@@ -44,6 +44,13 @@ router.get('/products', (req: Request, res: Response) => {
 
 router.get('/user/products', protect, (req: AuthenticatedRequest, res: Response) => {
   getUserProducts(req, res).catch((err) => {
+    console.error(err);
+    res.status(500).json({ message: 'Internal server error' });
+  });
+});
+
+router.post('/products/:productId/buy', protect, (req: AuthenticatedRequest, res: Response) => {
+  buyProduct(req, res).catch((err) => {
     console.error(err);
     res.status(500).json({ message: 'Internal server error' });
   });

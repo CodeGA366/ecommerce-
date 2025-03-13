@@ -6,8 +6,7 @@ import fs from 'fs';
 import path from 'path';
 import sequelize from './config/database';
 import authRoutes from './routes/authRoutes';
-import User from './models/User'; // Import the User model
-import Product from './models/Product'; // Import the Product model
+import './models/associations'; // Import associations
 
 dotenv.config();
 

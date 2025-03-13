@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { fetchProducts } from '../services/api';
+import { fetchProducts, buyProduct } from '../services/api';
 import { Product } from '../types';
+import { useAuth } from '../context/AuthContext';
 
 const Products: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const { user } = useAuth();
 
   useEffect(() => {
     const getProducts = async () => {
@@ -21,6 +23,16 @@ const Products: React.FC = () => {
 
     getProducts();
   }, []);
+
+  const handleBuyProduct = async (productId: string) => {
+    try {
+      await buyProduct(productId);
+      // Update the product list after purchase
+      setProducts(products.map(product => product.id === productId ? { ...product, sold: true } : product));
+    } catch (err) {
+      setError('Failed to buy product');
+    }
+  };
 
   if (loading) {
     return <div className="text-center">Loading...</div>;
@@ -42,6 +54,14 @@ const Products: React.FC = () => {
             <h2 className="text-xl font-semibold">{product.name}</h2>
             <p className="text-gray-700">{product.description}</p>
             <p className="text-gray-900 font-bold">${product.price}</p>
+            {!product.sold && user?.id !== product.userId && (
+              <button
+                onClick={() => handleBuyProduct(product.id)}
+                className="w-full px-4 py-2 mt-2 text-white bg-indigo-600 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              >
+                Buy
+              </button>
+            )}
           </div>
         ))}
       </div>
